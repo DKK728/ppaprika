@@ -1,28 +1,28 @@
 <template>
-  <div class="login">
-    <div class="container">
-      <img src="../assets/logo.png" alt class="avatar" />
-      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
-        <el-form-item prop="username">
+  <div class='login'>
+    <div class='container'>
+      <img src='../assets/logo.png' alt class='avatar' />
+      <el-form :model='loginForm' :rules='rules' ref='loginForm' class='demo-ruleForm'>
+        <el-form-item prop='username'>
           <el-input
-            v-model="loginForm.username"
-            prefix-icon="myicon myicon-user"
-            placeholder="请输入用户名"
+            v-model='loginForm.username'
+            prefix-icon='myicon myicon-user'
+            placeholder='请输入用户名'
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item prop='password'>
           <el-input
-            type="password"
-            v-model="loginForm.password"
-            prefix-icon="myicon myicon-key"
-            placeholder="请输入密码"
+            type='password'
+            v-model='loginForm.password'
+            prefix-icon='myicon myicon-key'
+            placeholder='请输入密码'
             clearable
-            @keyup.enter.native="loginsubmit"
+            @keyup.enter.native='loginsubmit'
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btn" @click="loginsubmit">登陆</el-button>
+          <el-button type='primary' class='login-btn' @click='loginsubmit'>登陆</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -52,11 +52,24 @@ export default {
     loginsubmit () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          login(this.loginForm).then(res => {
-            console.log(res)
-          })
+        login(this.loginForm)
+            .then(res => {
+              console.log(res)
+              if (res.data.meta.status === 200) {
+                localStorage.setItem('heima_manager_token', res.data.data.token)
+                this.$router.push({ name: 'home' })
+              } else {
+                this.$message({
+                  type: 'warning',
+                  message: res.data.meta.msg
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
         } else {
-          this.$message({
+        this.$message({
             type: 'error',
             message: '数据输入错误，请重新输入'
           })
@@ -67,7 +80,7 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang='less' scoped>
 .login {
   position: fixed;
   width: 100%;
