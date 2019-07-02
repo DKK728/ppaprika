@@ -29,32 +29,43 @@
   </div>
 </template>
 <script>
+import { login } from '@/api/user_api.js'
 export default {
-  data() {
+  data () {
     return {
       loginForm: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名称", trigger: "blur" }
+          { required: true, message: '请输入用户名称', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 16, message: "长度在 3 到 16 个字符", trigger: "blur" }
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   methods: {
-    loginsubmit() {
-      this.$refs.loginForm.validate((vaild)=>{
-        console.log(valid)
+    loginsubmit () {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          login(this.loginForm).then(res => {
+            console.log(res)
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '数据输入错误，请重新输入'
+          })
+          return false
+        }
       })
     }
   }
-};
+}
 </script>
 <style lang="less" scoped>
 .login {
