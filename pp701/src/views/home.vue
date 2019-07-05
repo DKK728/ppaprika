@@ -1,43 +1,43 @@
 <template>
-  <div class="home">
+  <div class='home'>
     <el-container>
-      <el-aside width="200px">
-        <div class="logo"></div>
+      <el-aside width='200px'>
+        <div class='logo'></div>
         <el-menu
-          :router="true"
-          :unique-opened="true"
-          :default-active="'2-2'"
-          class="el-menu-vertical-demo"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
+          :router='true'
+          :unique-opened='true'
+          :default-active="'1-1'"
+          class='el-menu-vertical-demo'
+          background-color='#c6c6c6'
+          text-color='aqua'
+          active-text-color='#ffffff'
         >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
+          <el-submenu index='1'>
+            <template slot='title'>
+              <i class='el-icon-location'></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="1-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
+            <el-menu-item index='/home/users'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
                 <span>用户列表</span>
               </template>
             </el-menu-item>
           </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
+          <el-submenu index='/users'>
+            <template slot='title'>
+              <i class='el-icon-location'></i>
               <span>权限管理</span>
             </template>
-            <el-menu-item index="/login">
-              <template slot="title">
-                <i class="el-icon-location"></i>
+            <el-menu-item index='/home/userlist'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
                 <span>角色列表</span>
               </template>
             </el-menu-item>
-            <el-menu-item index="2-2">
-              <template slot="title">
-                <i class="el-icon-location"></i>
+            <el-menu-item index='/home/authoritylist'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
                 <span>权限列表</span>
               </template>
             </el-menu-item>
@@ -45,17 +45,24 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <span class='myicon myicon-menu toggle-btn'></span>
+          <h1 class='system-title'>电商后台管理系统</h1>
+          <a href='javascript:;' class='welcome'>退出</a>
+        </el-header>
         <el-main>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 <script>
-export default {}
+export default {
+
+}
 </script>
-<style lang="less" scoped>
+<style lang='less' scoped>
 .home {
   height: 100%;
   .el-menu-admin:not(.el-menu--collapse) {
@@ -67,6 +74,7 @@ export default {}
   }
   .el-aside {
     background-color: #545c64;
+    height : 666px;
   }
   .el-header {
     display: flex;
@@ -84,7 +92,7 @@ export default {}
     padding: 0 15px;
     margin-left: -20px;
     font-size: 36px;
-    color: white;
+    color: orange;
     cursor: pointer;
     line-height: 60px;
     &:hover {
@@ -93,7 +101,7 @@ export default {}
   }
   .system-title {
     font-size: 28px;
-    color: white;
+    color: orange;
   }
   .welcome {
     color: white;

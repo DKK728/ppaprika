@@ -1,7 +1,7 @@
 <template>
   <div class='login'>
     <div class='container'>
-      <img src='../assets/logo.png' alt class='avatar' />
+      <img src='../assets/logo1.png' alt class='avatar' />
       <el-form :model='loginForm' :rules='rules' ref='loginForm' class='demo-ruleForm'>
         <el-form-item prop='username'>
           <el-input
@@ -52,7 +52,7 @@ export default {
     loginsubmit () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-        login(this.loginForm)
+          login(this.loginForm)
             .then(res => {
               console.log(res)
               if (res.data.meta.status === 200) {
@@ -69,7 +69,7 @@ export default {
               console.log(err)
             })
         } else {
-        this.$message({
+          this.$message({
             type: 'error',
             message: '数据输入错误，请重新输入'
           })

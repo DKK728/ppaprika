@@ -1,10 +1,22 @@
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8888/api/private/v1/";
+import axios from '@/api/interceptor.js'
 
-export const login = data => {
+export const login = (data) => {
   return axios({
-    method: "post",
-    url: "login",
+    method: 'post',
+    url: 'login',
     data
-  });
-};
+  })
+}
+export const getUserList = (pa) => {
+  return axios ({
+    url: 'users',
+    params: pa
+  })
+}
+export const addUser = (userdata) => {
+  return axios ({
+    url: 'users',
+    method: 'post',
+    data: userdata
+  })
+}
