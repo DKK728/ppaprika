@@ -8,15 +8,28 @@ export const login = (data) => {
   })
 }
 export const getUserList = (pa) => {
-  return axios ({
+  return axios({
     url: 'users',
     params: pa
   })
 }
 export const addUser = (userdata) => {
-  return axios ({
+  return axios({
     url: 'users',
     method: 'post',
     data: userdata
+  })
+}
+export const userStatusChange = (uid, type) => {
+  return axios({
+    url: `users/${uid}/state/${type}`,
+    method: 'put'
+  })
+}
+export const updateUser = (data) => {
+  return axios({
+    url: `users/${data.id}`,
+    method: 'put',
+    data: { email: data.email, mobile: data.mobile}
   })
 }

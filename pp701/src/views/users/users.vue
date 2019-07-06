@@ -28,18 +28,19 @@
         <template slot-scope="scope">
           <el-switch
             style="display: block"
-            v-model="value4"
+            v-model="scope.row.mg_state"
             active-color="#13ce66"
             inactive-color="#ff4949"
             active-text="可用"
             inactive-text="不可用"
+            @change="changeStatus(scope.row.id,scope.row.mg_state)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">分配角色</el-button>
+          <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" type="warning" @click="handleAllot(scope.$index, scope.row)">分配角色</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -56,20 +57,20 @@
         :total="total"
       ></el-pagination>
     </div>
-    <!-- 弹框 -->
+    <!-- 添加弹框 -->
     <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
       <el-form :model="form" :label-width="'120px'" ref="userform" :rules="rules">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" auto-complete="off"></el-input>
+          <el-input v-model="form.username" auto-complete="off" style="width: 200px;"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" auto-complete="off"></el-input>
+          <el-input v-model="form.password" auto-complete="off" style="width: 200px;"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" auto-complete="off"></el-input>
+          <el-input v-model="form.email" auto-complete="off" style="width: 200px;"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="mobile">
-          <el-input v-model="form.mobile" auto-complete="off"></el-input>
+          <el-input v-model="form.mobile" auto-complete="off" style="width: 200px;"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -77,10 +78,28 @@
         <el-button type="primary" @click="addUser">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 编辑弹框 -->
+    <el-dialog title="添加用户" :visible.sync="dialogEditFormVisible">
+      <el-form :model="editform" :label-width="'100px'" ref="editform" :rules="rules">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="editform.username" auto-complete="off" disabled style="width: 200px;"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="editform.email" auto-complete="off" style="width: 200px;"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" prop="mobile">
+          <el-input v-model="editform.mobile" auto-complete="off" style="width: 200px;"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editsubmit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getUserList, addUser } from '@/api/user_api.js'
+import { getUserList, addUser, userStatusChange, updateUser } from '@/api/user_api.js'
 export default {
   data () {
     return {
@@ -121,6 +140,7 @@ export default {
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
+      dialogEditFormVisible: false,
       rules: {
         username: [
           { required: true, message: '请输入用户名称', trigger: 'blur' }
@@ -136,6 +156,12 @@ export default {
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { pattern: /^1[345678]\d{9}$/, message: '请输入11位手机号', trigger: 'blur' }
         ]
+      },
+      editform: {
+        id: '',
+        username: '',
+        email: '',
+        mobile: ''
       }
     }
   },
@@ -172,6 +198,7 @@ export default {
       this.init()
     },
     addUser () {
+      // 测试和api里的addUser的关系
       this.$refs.userform.validate(valid => {
         if (valid) {
           addUser(this.form)
@@ -199,7 +226,53 @@ export default {
           return false
         }
       })
-    }
+    },
+    changeStatus (uid, type) {
+      userStatusChange(uid, type)
+        .then(res => {
+          this.$message({
+            type: 'success',
+            message: res.data.meta.msg
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    handleEdit (data) {
+      this.dialogEditFormVisible = true
+      this.editform.username = data.username
+      this.editform.email = data.email
+      this.editform.mobile = data.mobile
+      this.editform.id = data.id
+    },
+    editsubmit () {
+      this.$refs.editform.validate((valid) => {
+        if (valid) {
+          updateUser (this.editform)
+            .then(res => {
+              // console.log(res)
+              if (res.data.meta.status === 200) {
+                this.dialogEditFormVisible = false
+                this.$refs.editform.resetFields()
+                this.$message({
+                  type: 'success',
+                  message: res.data.meta.msg
+                })
+              }else {
+                this.$message({
+                  type: 'error',
+                  message: res.data.meta.msg
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+      })
+    },
+    handleAllot ( ) {}
   }
 }
 </script>
