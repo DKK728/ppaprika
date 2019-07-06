@@ -7,8 +7,14 @@ export const allotUser = (id,rid) => {
         data: { rid: rid }
     })
 }
-export const getAllRoleList = (data) => {
+export const getAllRoleList = () => {
     return axios({
         url: 'roles'
+    })
+}
+export const deleteRightId = (roleId,rightId) => {
+    return axios({
+        url:`roles/${roleId}/rights/${rightId}`,
+        method: 'delete'
     })
 }
