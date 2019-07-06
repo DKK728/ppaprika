@@ -33,3 +33,9 @@ export const updateUser = (data) => {
     data: { email: data.email, mobile: data.mobile}
   })
 }
+export const deleteUser = (id) => {
+  return axios({
+    url: `users/${id}`,
+    method: 'delete'
+  })
+}

@@ -22,7 +22,7 @@
     <el-table :data="userlist" border style="width: 100%">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="100"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column label="用户状态" width="180">
         <template slot-scope="scope">
@@ -40,8 +40,8 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="warning" @click="handleAllot(scope.$index, scope.row)">分配角色</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button size="mini" type="warning" @click="handleAllot(scope.row)">分配角色</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -96,12 +96,36 @@
         <el-button type="primary" @click="editsubmit">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 分配弹框 -->
+    <el-dialog title="分配角色" :visible.sync="dialogAllotFormVisible">
+      <el-form :model="allotform">
+        <el-form-item label="用户名:">
+          <!-- <el-input v-model="allotform.name" auto-complete="off" style="width: 200px;"></el-input> -->
+          {{allotform.username}}
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="allotform.rid" placeholder="请选择角色" clearable>
+            <el-option
+              v-for="item in roleList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAllotFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="allotUserSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getUserList, addUser, userStatusChange, updateUser } from '@/api/user_api.js'
+import { getUserList, addUser, userStatusChange, updateUser, deleteUser } from '@/api/user_api.js'
+import { allotUser, getAllRoleList } from '@/api/role_api.js'
 export default {
-  data () {
+  data() {
     return {
       query: '',
       pagenum: 1,
@@ -141,6 +165,7 @@ export default {
       dialogTableVisible: false,
       dialogFormVisible: false,
       dialogEditFormVisible: false,
+      dialogAllotFormVisible: false,
       rules: {
         username: [
           { required: true, message: '请输入用户名称', trigger: 'blur' }
@@ -162,14 +187,30 @@ export default {
         username: '',
         email: '',
         mobile: ''
-      }
+      },
+      allotform: {
+        username: '',
+        id: '',
+        rid: ''
+      },
+      roleList: [],
+      deleteId: ''
     }
   },
-  mounted () {
-    this.init()
+  mounted() {
+    this.init(),
+      getAllRoleList()
+        .then(res => {
+          console.log(res)
+          if (res.data.meta.status === 200)
+            this.roleList = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
   },
   methods: {
-    init () {
+    init() {
       getUserList({
         query: this.query,
         pagenum: this.pagenum,
@@ -184,20 +225,20 @@ export default {
           console.log(err)
         })
     },
-    handleSizeChange (e) {
+    handleSizeChange(e) {
       this.pagesize = e
       this.pagenum = 1
       this.init()
     },
-    handleCurrentChange (r) {
+    handleCurrentChange(r) {
       this.pagenum = r
       this.init()
     },
-    search () {
+    search() {
       this.pagenum = 1
       this.init()
     },
-    addUser () {
+    addUser() {
       // 测试和api里的addUser的关系
       this.$refs.userform.validate(valid => {
         if (valid) {
@@ -227,7 +268,7 @@ export default {
         }
       })
     },
-    changeStatus (uid, type) {
+    changeStatus(uid, type) {
       userStatusChange(uid, type)
         .then(res => {
           this.$message({
@@ -239,17 +280,17 @@ export default {
           console.log(err)
         })
     },
-    handleEdit (data) {
+    handleEdit(data) {
       this.dialogEditFormVisible = true
       this.editform.username = data.username
       this.editform.email = data.email
       this.editform.mobile = data.mobile
       this.editform.id = data.id
     },
-    editsubmit () {
+    editsubmit() {
       this.$refs.editform.validate((valid) => {
         if (valid) {
-          updateUser (this.editform)
+          updateUser(this.editform)
             .then(res => {
               // console.log(res)
               if (res.data.meta.status === 200) {
@@ -259,7 +300,7 @@ export default {
                   type: 'success',
                   message: res.data.meta.msg
                 })
-              }else {
+              } else {
                 this.$message({
                   type: 'error',
                   message: res.data.meta.msg
@@ -272,7 +313,71 @@ export default {
         }
       })
     },
-    handleAllot ( ) {}
+    handleAllot(data) {
+      this.dialogAllotFormVisible = true
+      this.allotform.username = data.username
+      this.allotform.id = data.id
+      this.allotform.rid = data.rid
+    },
+    allotUserSubmit() {
+      if (!this.allotform.rid) {
+        this.$message({
+          type: 'warning',
+          message: '请先选择角色'
+        })
+        return false
+      }
+      allotUser(this.allotform.id, this.allotform.rid)
+        .then(res => {
+          if (res.data.meta.status === 200) {
+            this.dialogAllotFormVisible = false
+            this.$message({
+              type: 'success',
+              message: '角色修改成功'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: '角色修改失败'
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    handleDelete(data) {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          deleteUser(data.id)
+            .then(res => {
+              console.log(res)
+              if (res.data.meta.status === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                })
+                this.pagenum = Math.ceil((this.total - 1) / this.pagesize) < this.pagenum ? --this.pagenum : this.pagenum
+                this.init()
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '删除失败!'
+                })
+              }
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    }
   }
 }
 </script>
