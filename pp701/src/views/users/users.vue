@@ -79,7 +79,7 @@
       </div>
     </el-dialog>
     <!-- 编辑弹框 -->
-    <el-dialog title="添加用户" :visible.sync="dialogEditFormVisible">
+    <el-dialog title="编辑用户" :visible.sync="dialogEditFormVisible">
       <el-form :model="editform" :label-width="'100px'" ref="editform" :rules="rules">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="editform.username" auto-complete="off" disabled style="width: 200px;"></el-input>
