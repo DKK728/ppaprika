@@ -24,7 +24,7 @@
               </template>
             </el-menu-item>
           </el-submenu>
-          <el-submenu index='/users'>
+          <el-submenu index='2'>
             <template slot='title'>
               <i class='el-icon-location'></i>
               <span>权限管理</span>
@@ -39,6 +39,30 @@
               <template slot='title'>
                 <i class='el-icon-location'></i>
                 <span>权限列表</span>
+              </template>
+            </el-menu-item>
+          </el-submenu>
+          <el-submenu index='3'>
+            <template slot='title'>
+              <i class='el-icon-location'></i>
+              <span>商品管理</span>
+            </template>
+            <el-menu-item index='/home/goodslist'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
+                <span>商品列表</span>
+              </template>
+            </el-menu-item>
+            <el-menu-item index='/home/classparameter'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
+                <span>分类参数</span>
+              </template>
+            </el-menu-item>
+            <el-menu-item index='/home/goodsclass'>
+              <template slot='title'>
+                <i class='el-icon-location'></i>
+                <span>商品分类</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -74,7 +98,7 @@ export default {
   }
   .el-aside {
     background-color: #545c64;
-    height : 666px;
+    height : 100%;
   }
   .el-header {
     display: flex;

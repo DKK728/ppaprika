@@ -51,7 +51,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagenum"
-        :page-sizes="[1, 2, 3, 4]"
+        :page-sizes="[1, 2, 3, 4, 5]"
         :page-size="pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -129,7 +129,7 @@ export default {
     return {
       query: '',
       pagenum: 1,
-      pagesize: 4,
+      pagesize: 5,
       tableData: [
         {
           date: '2016-05-02',
@@ -198,7 +198,7 @@ export default {
     }
   },
   mounted() {
-    this.init(),
+    this.init()
       getAllRoleList()
         .then(res => {
           console.log(res)

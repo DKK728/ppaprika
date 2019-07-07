@@ -6,6 +6,9 @@ import Welcome from '@/views/users/index'
 import Users from '@/views/users/users'
 import Userlist from '@/views/authority/userlist'
 import Authoritylist from '@/views/authority/authoritylist'
+import Goodslist from '@/views/goods/goodslist'
+import Classparameter from '@/views/goods/classparameter'
+import Goodsclass from '@/views/goods/goodsclass'
 Vue.use(VueRouter)
 var router = new VueRouter({
   routes: [
@@ -37,6 +40,21 @@ var router = new VueRouter({
           name: 'authoritylist',
           path: 'authoritylist',
           component: Authoritylist
+        },
+        {
+          name: 'goodslist',
+          path: 'goodslist',
+          component: Goodslist
+        },
+        {
+          name: 'classparameter',
+          path: 'classparameter',
+          component: Classparameter
+        },
+        {
+          name: 'goodsclass',
+          path: 'goodsclass',
+          component: Goodsclass
         }
       ]
     },
