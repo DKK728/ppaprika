@@ -4,11 +4,13 @@ import Login from '@/views/login.vue'
 import Home from '@/views/home.vue'
 import Welcome from '@/views/users/index'
 import Users from '@/views/users/users'
-import Userlist from '@/views/authority/userlist'
-import Authoritylist from '@/views/authority/authoritylist'
-import Goodslist from '@/views/goods/goodslist'
-import Classparameter from '@/views/goods/classparameter'
-import Goodsclass from '@/views/goods/goodsclass'
+import Roles from '@/views/authority/roles'
+import Rights from '@/views/authority/rights'
+import Goods from '@/views/goods/goods'
+import Params from '@/views/goods/params'
+import Categories from '@/views/goods/categories'
+import Toadd from '@/views/goods/toadd'
+import List from '@/views/goods/list'
 Vue.use(VueRouter)
 var router = new VueRouter({
   routes: [
@@ -32,29 +34,42 @@ var router = new VueRouter({
           component: Users
         },
         {
-          name: 'userlist',
-          path: 'userlist',
-          component: Userlist
+          name: 'roles',
+          path: 'roles',
+          component: Roles
         },
         {
-          name: 'authoritylist',
-          path: 'authoritylist',
-          component: Authoritylist
+          name: 'rights',
+          path: 'rights',
+          component: Rights
         },
         {
-          name: 'goodslist',
-          path: 'goodslist',
-          component: Goodslist
+          name: 'goods',
+          path: 'goods',
+          component: Goods,
+          redirect: { name: 'list' },
+          children: [
+            {
+              name: 'toadd',
+              path: 'toadd',
+              component: Toadd
+            },
+            {
+              name: 'list',
+              path: 'list',
+              component: List
+            }
+          ]
         },
         {
-          name: 'classparameter',
-          path: 'classparameter',
-          component: Classparameter
+          name: 'params',
+          path: 'params',
+          component: Params
         },
         {
-          name: 'goodsclass',
-          path: 'goodsclass',
-          component: Goodsclass
+          name: 'categories',
+          path: 'categories',
+          component: Categories
         }
       ]
     },

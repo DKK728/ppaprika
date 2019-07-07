@@ -1,6 +1,6 @@
 <template>
     <div>
-        goodsclass
+        categories
     </div>
 </template>
 <script>

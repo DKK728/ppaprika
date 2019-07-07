@@ -1,6 +1,6 @@
 <template>
     <div>
-        classparameter
+        params
     </div>
 </template>
 <script>

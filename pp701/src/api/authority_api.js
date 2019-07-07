@@ -5,3 +5,8 @@ export const getAllAuthority = (type) => {
         url: `rights/${type}`
     })
 }
+export const getMenuList = () => {
+    return axios ({
+        url: 'menus'
+    })
+}

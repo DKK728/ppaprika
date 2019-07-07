@@ -8,8 +8,8 @@
     <el-table :data="authorityList" style="width: 100%">
       <el-table-column prop="authName" label="权限名称" width="180"></el-table-column>
       <el-table-column prop="path" label="路径" width="180"></el-table-column>
-      <el-table-column  label="层级">
-        <template slot-scope='scope'>
+      <el-table-column label="层级">
+        <template slot-scope="scope">
           <!-- {{scope.row.level | levelFilters}} -->
           {{scope.row.level | levelFilters}}
         </template>
@@ -29,7 +29,7 @@ export default {
     getAllAuthority('list')
       .then(res => {
         console.log(res)
-        if(res.data.meta.status === 200){
+        if (res.data.meta.status === 200) {
           this.authorityList = res.data.data
         }
       })
@@ -40,7 +40,7 @@ export default {
   // 局部过滤器
   filters: {
     levelFilters: (level) => {
-      if(level === '0') {
+      if (level === '0') {
         return '一级'
       } else if (level === '1') {
         return '二级'

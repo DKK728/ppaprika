@@ -125,7 +125,7 @@
 import { getUserList, addUser, userStatusChange, updateUser, deleteUser } from '@/api/user_api.js'
 import { allotUser, getAllRoleList } from '@/api/role_api.js'
 export default {
-  data() {
+  data () {
     return {
       query: '',
       pagenum: 1,
@@ -197,20 +197,20 @@ export default {
       deleteId: ''
     }
   },
-  mounted() {
+  mounted () {
     this.init()
-      getAllRoleList()
-        .then(res => {
-          console.log(res)
-          if (res.data.meta.status === 200)
-            this.roleList = res.data.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    getAllRoleList()
+      .then(res => {
+        console.log(res)
+        if (res.data.meta.status === 200)
+          this.roleList = res.data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
   methods: {
-    init() {
+    init () {
       getUserList({
         query: this.query,
         pagenum: this.pagenum,
@@ -225,20 +225,20 @@ export default {
           console.log(err)
         })
     },
-    handleSizeChange(e) {
+    handleSizeChange (e) {
       this.pagesize = e
       this.pagenum = 1
       this.init()
     },
-    handleCurrentChange(r) {
+    handleCurrentChange (r) {
       this.pagenum = r
       this.init()
     },
-    search() {
+    search () {
       this.pagenum = 1
       this.init()
     },
-    addUser() {
+    addUser () {
       // 测试和api里的addUser的关系
       this.$refs.userform.validate(valid => {
         if (valid) {
@@ -268,7 +268,7 @@ export default {
         }
       })
     },
-    changeStatus(uid, type) {
+    changeStatus (uid, type) {
       userStatusChange(uid, type)
         .then(res => {
           this.$message({
@@ -280,14 +280,14 @@ export default {
           console.log(err)
         })
     },
-    handleEdit(data) {
+    handleEdit (data) {
       this.dialogEditFormVisible = true
       this.editform.username = data.username
       this.editform.email = data.email
       this.editform.mobile = data.mobile
       this.editform.id = data.id
     },
-    editsubmit() {
+    editsubmit () {
       this.$refs.editform.validate((valid) => {
         if (valid) {
           updateUser(this.editform)
@@ -313,13 +313,13 @@ export default {
         }
       })
     },
-    handleAllot(data) {
+    handleAllot (data) {
       this.dialogAllotFormVisible = true
       this.allotform.username = data.username
       this.allotform.id = data.id
       this.allotform.rid = data.rid
     },
-    allotUserSubmit() {
+    allotUserSubmit () {
       if (!this.allotform.rid) {
         this.$message({
           type: 'warning',
@@ -346,7 +346,7 @@ export default {
           console.log(err)
         })
     },
-    handleDelete(data) {
+    handleDelete (data) {
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

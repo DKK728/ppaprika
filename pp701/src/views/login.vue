@@ -1,28 +1,28 @@
 <template>
-  <div class='login'>
-    <div class='container'>
-      <img src='../assets/logo1.png' alt class='avatar' />
-      <el-form :model='loginForm' :rules='rules' ref='loginForm' class='demo-ruleForm'>
-        <el-form-item prop='username'>
+  <div class="login">
+    <div class="container">
+      <img src="../assets/logo1.png" alt class="avatar" />
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
+        <el-form-item prop="username">
           <el-input
-            v-model='loginForm.username'
-            prefix-icon='myicon myicon-user'
-            placeholder='请输入用户名'
+            v-model="loginForm.username"
+            prefix-icon="myicon myicon-user"
+            placeholder="请输入用户名"
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item prop='password'>
+        <el-form-item prop="password">
           <el-input
-            type='password'
-            v-model='loginForm.password'
-            prefix-icon='myicon myicon-key'
-            placeholder='请输入密码'
+            type="password"
+            v-model="loginForm.password"
+            prefix-icon="myicon myicon-key"
+            placeholder="请输入密码"
             clearable
-            @keyup.enter.native='loginsubmit'
+            @keyup.enter.native="loginsubmit"
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type='primary' class='login-btn' @click='loginsubmit'>登陆</el-button>
+          <el-button type="primary" class="login-btn" @click="loginsubmit">登陆</el-button>
         </el-form-item>
       </el-form>
     </div>

@@ -117,7 +117,7 @@
 import { getAllRoleList, deleteRightId, addAuthorityRole, deleteRole, updateRole, updateRoleRights } from '@/api/role_api.js'
 import { getAllAuthority } from '@/api/authority_api.js'
 export default {
-  data() {
+  data () {
     return {
       roleList: [],
       dialogFormVisible: false,
@@ -134,7 +134,7 @@ export default {
       },
       rules: {
         roleName: [
-          { required: true, message: '请输入角色名称', trigger: 'blur' },
+          { required: true, message: '请输入角色名称', trigger: 'blur' }
         ]
       },
       authorityList: [],
@@ -147,11 +147,11 @@ export default {
       roleId: ''
     }
   },
-  mounted() {
+  mounted () {
     this.init()
   },
   methods: {
-    init() {
+    init () {
       getAllRoleList()
         .then(res => {
           // console.log(res)
@@ -160,10 +160,10 @@ export default {
           }
         })
         .catch(err => {
-
+          console.log(err)
         })
     },
-    close(row, rightId) {
+    close (row, rightId) {
       console.log(row.id, rightId)
       deleteRightId(row.id, rightId)
         .then(res => {
@@ -185,10 +185,10 @@ export default {
           console.log(err)
         })
     },
-    addRole() {
+    addRole () {
       this.dialogFormVisible = true
     },
-    addRoleSubmit() {
+    addRoleSubmit () {
       addAuthorityRole(this.form)
         .then(res => {
           console.log(res)
@@ -211,7 +211,7 @@ export default {
           console.log(err)
         })
     },
-    handleDelete(data) {
+    handleDelete (data) {
       this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -242,13 +242,13 @@ export default {
           })
         })
     },
-    handleEdit(data) {
+    handleEdit (data) {
       this.dialogEditFormVisible = true
       this.editform.roleName = data.roleName
       this.editform.roleDesc = data.roleDesc
       this.editform.id = data.id
     },
-    editsubmit() {
+    editsubmit () {
       this.$refs.editform.validate((valid) => {
         if (valid) {
           updateRole(this.editform)
@@ -275,7 +275,7 @@ export default {
         }
       })
     },
-    handleAllot(row) {
+    handleAllot (row) {
       this.dialogAllotFormVisible = true
       this.defaultCheck.length = 0
       this.roleId = row.id
@@ -298,9 +298,8 @@ export default {
           })
         }
       })
-
     },
-    allotSubmit() {
+    allotSubmit () {
       var arr = this.$refs.tree.getCheckedNodes()
       // console.log(arr)
       var arrlast = this.quchong(arr)
@@ -325,7 +324,7 @@ export default {
           console.log(err)
         ])
     },
-    quchong(arr) {
+    quchong (arr) {
       var temp = []
       for (var i = 0; i < arr.length; i++) {
         temp.push(arr[i].id + ',' + arr[i].pid)
