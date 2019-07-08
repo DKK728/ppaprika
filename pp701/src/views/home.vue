@@ -1,25 +1,29 @@
 <template>
-  <div class='home'>
+  <div class="home">
     <el-container>
-      <el-aside width='200px'>
-        <div class='logo'></div>
+      <el-aside width="200px">
+        <div class="logo"></div>
         <el-menu
-          :router='true'
-          :unique-opened='true'
+          :router="true"
+          :unique-opened="true"
           :default-active="'1-1'"
-          class='el-menu-vertical-demo'
-          background-color='#c6c6c6'
-          text-color='aqua'
-          active-text-color='#ffffff'
+          class="el-menu-vertical-demo"
+          background-color="#c6c6c6"
+          text-color="aqua"
+          active-text-color="#ffffff"
         >
-          <el-submenu :index="first.id + ''" v-for="first in menulist" :key='first.id'>
-            <template slot='title'>
-              <i class='el-icon-location'></i>
+          <el-submenu :index="first.id + ''" v-for="first in menulist" :key="first.id">
+            <template slot="title">
+              <i class="el-icon-location"></i>
               <span>{{first.authName}}</span>
             </template>
-            <el-menu-item :index="'/home/'+second.path" v-for='second in first.children' :key='second.id'>
-              <template slot='title'>
-                <i class='el-icon-location'></i>
+            <el-menu-item
+              :index="'/home/'+second.path"
+              v-for="second in first.children"
+              :key="second.id"
+            >
+              <template slot="title">
+                <i class="el-icon-location"></i>
                 <span>{{second.authName}}</span>
               </template>
             </el-menu-item>
@@ -89,14 +93,14 @@
                 <span>罗德岛</span>
               </template>
             </el-menu-item>
-          </el-submenu> -->
+          </el-submenu>-->
         </el-menu>
       </el-aside>
       <el-container>
         <el-header>
-          <span class='myicon myicon-menu toggle-btn'></span>
-          <h1 class='system-title'>电商后台管理系统</h1>
-          <a href='javascript:;' class='welcome'>退出</a>
+          <span class="myicon myicon-menu toggle-btn"></span>
+          <h1 class="system-title">电商后台管理系统</h1>
+          <a href="javascript:;" class="welcome">退出</a>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -115,15 +119,15 @@ export default {
   },
   mounted () {
     getMenuList()
-    .then(res => {
-      console.log(res)
-      if(res.data.meta.status ===200 ) {
-        this.menulist = res.data.data
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        console.log(res)
+        if (res.data.meta.status === 200) {
+          this.menulist = res.data.data
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
@@ -139,7 +143,7 @@ export default {
   }
   .el-aside {
     background-color: #545c64;
-    height : 100%;
+    height: 100%;
   }
   .el-header {
     display: flex;
