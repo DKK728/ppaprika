@@ -8,8 +8,8 @@
           :unique-opened="true"
           :default-active="'1-1'"
           class="el-menu-vertical-demo"
-          background-color="#c6c6c6"
-          text-color="aqua"
+          background-color="#40cbb4"
+          text-color="#ffea99"
           active-text-color="#ffffff"
         >
           <el-submenu :index="first.id + ''" v-for="first in menulist" :key="first.id">
@@ -100,7 +100,7 @@
         <el-header>
           <span class="myicon myicon-menu toggle-btn"></span>
           <h1 class="system-title">电商后台管理系统</h1>
-          <a href="javascript:;" class="welcome">退出</a>
+          <a href="javascript:;" class="welcome" style="color:#ff7d5d">退出</a>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -142,14 +142,14 @@ export default {
     height: 100%;
   }
   .el-aside {
-    background-color: #545c64;
+    background-color: #40cbb4;
     height: 100%;
   }
   .el-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #545c64;
+    background-color: #40cbb4;
   }
   .logo {
     height: 60px;
@@ -170,10 +170,13 @@ export default {
   }
   .system-title {
     font-size: 28px;
-    color: orange;
+    color: #ff7d5d;
   }
   .welcome {
     color: white;
+  }
+  .el-icon-location {
+    color: #fe7d60;
   }
 }
 </style>
