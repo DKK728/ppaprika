@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
+const _1ebfcd1e = () => interopDefault(import('..\\pages\\air\\index.vue' /* webpackChunkName: "pages_air_index" */))
+const _60e786f4 = () => interopDefault(import('..\\pages\\hotel\\index.vue' /* webpackChunkName: "pages_hotel_index" */))
+const _5fccf04c = () => interopDefault(import('..\\pages\\post\\index.vue' /* webpackChunkName: "pages_post_index" */))
+const _57a72758 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
 const _befd1c28 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
@@ -79,6 +83,22 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
+      path: "/air",
+      component: _1ebfcd1e,
+      name: "air"
+    }, {
+      path: "/hotel",
+      component: _60e786f4,
+      name: "hotel"
+    }, {
+      path: "/post",
+      component: _5fccf04c,
+      name: "post"
+    }, {
+      path: "/user/login",
+      component: _57a72758,
+      name: "user-login"
+    }, {
       path: "/",
       component: _befd1c28,
       name: "index"
