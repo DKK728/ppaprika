@@ -30,7 +30,7 @@
                 </div>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人中心</el-dropdown-item>
+                <el-dropdown-item @click.native=handleUser>个人中心</el-dropdown-item>
                 <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -56,6 +56,10 @@ export default {
       setTimeout(() => {
         this.$router.replace("/user/login")
       }, 1000);
+    },
+    handleUser( ){
+      this.$message.warning('目前不支持该功能，敬请期待')
+      return
     }
   }
 }

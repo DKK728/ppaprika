@@ -2,7 +2,7 @@
   <div>
     <el-form :model="form" ref="form" :rules="rules" class="form">
       <el-form-item class="form-item" prop="username">
-        <el-input placeholder="用户名/手机" v-model="form.username" clearable autofocus = true></el-input>
+        <el-input placeholder="用户名/手机" v-model="form.username" clearable autofocus="true"></el-input>
       </el-form-item>
 
       <el-form-item class="form-item" prop="password">
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { Loading } from 'element-ui';
 export default {
   data () {
     return {
@@ -54,10 +55,12 @@ export default {
             .then(res => {
               console.log(res)
               if (res.status === 200) {
-                this.$message.success('login success !')
-                setTimeout(() => {
-                  this.$router.push("/")
-                }, 1000);
+                // this.$message.success('login success !')
+                // setTimeout(() => {
+                //   this.$router.push("/")
+                // }, 1000);
+                this.$store.commit('user/setUserInfo', res.data)
+                this.openFullScreen2()
               }
               // this.$message.success('login success !')
               // setTimeout(() => {
@@ -78,6 +81,18 @@ export default {
         }
       })
 
+    },
+    openFullScreen2 () {
+      const loading = this.$loading({
+        lock: true,
+        text: '登录成功！',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push("/")
+      }, 1500);
     }
   }
 }
