@@ -2,11 +2,11 @@
   <div>
     <el-form :model="form" ref="form" :rules="rules" class="form">
       <el-form-item class="form-item" prop="username">
-        <el-input placeholder="用户名/手机" v-model="form.username"></el-input>
+        <el-input placeholder="用户名/手机" v-model="form.username" clearable autofocus = true></el-input>
       </el-form-item>
 
       <el-form-item class="form-item" prop="password">
-        <el-input placeholder="密码" type="password" v-model="form.password"></el-input>
+        <el-input placeholder="密码" type="password" v-model="form.password" clearable></el-input>
       </el-form-item>
 
       <p class="form-text">
@@ -48,6 +48,35 @@ export default {
   },
   methods: {
     handleLoginSubmit () {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.$store.dispatch('user/login', this.form)
+            .then(res => {
+              console.log(res)
+              if (res.status === 200) {
+                this.$message.success('login success !')
+                setTimeout(() => {
+                  this.$router.push("/")
+                }, 1000);
+              }
+              // this.$message.success('login success !')
+              // setTimeout(() => {
+              //   this.$router.push("/")
+              // }, 1000);
+            })
+          //写在axios.js里面了
+          // .catch(err => {
+          //   // console.log(err)
+          //   // console.log(err.response)
+          //   // console.log(err.request)
+          //   // console.log(err.message)
+          //   if (err.response.status === 400) {
+          //     this.$message.error(err.response.data.message)
+          //   }
+          // })
+
+        }
+      })
 
     }
   }

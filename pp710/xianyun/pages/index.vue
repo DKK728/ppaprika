@@ -72,7 +72,7 @@ export default {
     this.$axios({
       url: '/scenics/banners'
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       const { data } = res.data
       this.banners = data
     })
@@ -185,7 +185,7 @@ export default {
     .search-input {
       width: 550px;
       height: 46px;
-      background: #000;
+      background: #fff;
       border-radius: 0 4px 4px 4px;
       border: 1px rgba(255, 255, 255, 0.2) solid;
       border-top: none;

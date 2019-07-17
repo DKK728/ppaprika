@@ -14,21 +14,24 @@
           <nuxt-link to="/air">国内机票</nuxt-link>
         </el-row>
         <el-row type="flex" class="login">
-          <div v-if="false">
+          <div v-if="!$store.state.user.userInfo.token" class="loginRegister">
             <nuxt-link to="/user/login">登录 / 注册</nuxt-link>
           </div>
-          <div>
+          <div v-else>
             <el-dropdown>
               <span class="el-dropdown-link">
                 <div>
                   <img src="../assets/head.png" alt />
-                  {{username}}
-                  <i class="el-icon-arrow-down el-icon--right"></i>
+                  <!-- 可以改为<img:src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar"> -->
+                  {{$store.state.user.userInfo.user.nickname}}
+                  <i
+                    class="el-icon-arrow-down el-icon--right"
+                  ></i>
                 </div>
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>个人中心</el-dropdown-item>
-                <el-dropdown-item @click="handleLogout">退出</el-dropdown-item>
+                <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -45,9 +48,14 @@ export default {
       username: '黑马程序员'
     }
   },
-  methods:{
-    handleLogout(){
-      console.log(退出)
+  methods: {
+    handleLogout () {
+      // console.log('退出')
+      this.$store.commit('user/resetUserInfo')
+      this.$message.success('退出成功')
+      setTimeout(() => {
+        this.$router.replace("/user/login")
+      }, 1000);
     }
   }
 }
@@ -93,6 +101,9 @@ export default {
       line-height: 60px;
       font-size: 14px;
       color: #606266;
+      &:hover {
+          color: #409eff;
+        }
       span {
         cursor: pointer;
       }
